@@ -397,7 +397,7 @@ previous_time = time.time()
 #
 
 
-def getDeviceCpuInfo():
+def getCpuInfo():
     global rpi_cpu_tuple
     #  cat /proc/cpuinfo | /bin/egrep -i "processor|model|bogo|hardware|serial"
     # MULTI-CORE
@@ -471,7 +471,7 @@ def getDeviceCpuInfo():
     print_line('rpi_cpu_tuple=[{}]'.format(rpi_cpu_tuple), debug=True)
 
 
-def getDeviceMemory():
+def getMemory():
     global rpi_memory_tuple
     #  $ cat /proc/meminfo | /bin/egrep -i "mem[TFA]"
     #  MemTotal:         948304 kB
@@ -509,11 +509,11 @@ def getDeviceMemory():
     rpi_memory_tuple = (mem_total, mem_free, mem_avail, swap_total, swap_free) # [0]=total, [1]=free, [2]=avail., [3]=swap total, [4]=swap free
     print_line('rpi_memory_tuple=[{}]'.format(rpi_memory_tuple), debug=True)
 
-def getDeviceModel():
+def getModel():
     global rpi_model
     global rpi_model_raw
     global rpi_connections
-    out = subprocess.Popen("/bin/cat /proc/device-tree/model | /bin/sed -e 's/\\x0//g'",
+    out = subprocess.Popen("/bin/cat /proc/-tree/model | /bin/sed -e 's/\\x0//g'",
                            shell=True,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.STDOUT)
@@ -860,14 +860,14 @@ def getFileSystemDrives():
     # tmpfs 340 0 340 0% /run/user/1000
 
     # FAILING Case v1.6.x (issue #61)
-    # [[/bin/df: /mnt/sabrent: No such device or address',
+    # [[/bin/df: /mnt/sabrent: No such  or address',
     #   '/dev/root         119756  19503     95346  17% /',
     #   '/dev/sda1         953868 882178     71690  93% /media/usb0',
     #   '/dev/sdb1         976761  93684    883078  10% /media/pi/SSD']]
 
     tmpDrives = []
     for currLine in trimmedLines:
-        if 'no such device' in currLine.lower():
+        if 'no such ' in currLine.lower():
             print_line('BAD LINE FORMAT, Skipped=[{}]'.format(currLine), debug=True, warning=True)
             continue
         lineParts = currLine.split()
@@ -1384,7 +1384,7 @@ detectorValues = OrderedDict([
         title="Monitor",
         topic_category="sensor",
         device_class="timestamp",
-        device_ident="RPi-{}".format(rpi_hostname),
+        device_ident="{}".format(rpi_hostname),
         no_title_prefix="yes",
         icon='mdi:raspberry-pi',
         json_attr="yes",
