@@ -1228,13 +1228,13 @@ K_ALIVE_TIMOUT_IN_SECONDS = 60
 
 def publishAliveStatus():
     print_line('- SEND: yes, still alive -', debug=True)
-    mqtt_client.publish(lwt_sensor_topic, payload=lwt_online_val, retain=False)
-    mqtt_client.publish(lwt_command_topic, payload=lwt_online_val, retain=False)
+    mqtt_client.publish(lwt_sensor_topic, payload=lwt_online_val, retain=True)
+    mqtt_client.publish(lwt_command_topic, payload=lwt_online_val, retain=True)
 
 def publishShuttingDownStatus():
     print_line('- SEND: shutting down -', debug=True)
-    mqtt_client.publish(lwt_sensor_topic, payload=lwt_offline_val, retain=False)
-    mqtt_client.publish(lwt_command_topic, payload=lwt_offline_val, retain=False)
+    mqtt_client.publish(lwt_sensor_topic, payload=lwt_offline_val, retain=True)
+    mqtt_client.publish(lwt_command_topic, payload=lwt_offline_val, retain=True)
 
 def aliveTimeoutHandler():
     print_line('- MQTT TIMER INTERRUPT -', debug=True)
