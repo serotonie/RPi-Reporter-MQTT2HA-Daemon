@@ -1427,7 +1427,6 @@ print_line('Announcing RPi Monitoring device to MQTT broker for auto-discovery .
 detectorValues = OrderedDict([
     (K_LD_MONITOR, dict(
         title="Monitor",
-        title="Monitor",
         topic_category="sensor",
         device_class="timestamp",
         device_ident="{}".format(rpi_hostname),
@@ -1447,7 +1446,6 @@ detectorValues = OrderedDict([
     )),
     (K_LD_FS_USED, dict(
         title="Disk Used",
-        title="Disk Used",
         topic_category="sensor",
         no_title_prefix="yes",
         unit="%",
@@ -1455,7 +1453,6 @@ detectorValues = OrderedDict([
         json_value="fs_used_prcnt",
     )),
     (K_LD_CPU_USE, dict(
-        title="CPU Use",
         title="CPU Use",
         topic_category="sensor",
         no_title_prefix="yes",
