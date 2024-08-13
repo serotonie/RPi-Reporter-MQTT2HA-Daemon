@@ -838,7 +838,7 @@ def getNetworkIFs():
         getNetworkIFsUsingIP(ip_cmd)
     else:
         stdout, _, returncode = invoke_shell_cmd(
-            '/usr/sbin/ip link | /bin/egrep "Link|flags|inet |ether " | /bin/egrep -v -i "lo:|loopback|inet6|\:\:1|127\.0\.0\.1"')
+            '/sbin/ifconfig | /bin/egrep "Link|flags|inet |ether " | /bin/egrep -v -i "lo:|loopback|inet6|\:\:1|127\.0\.0\.1"')
         lines = []
         if not returncode:
             lines = stdout.decode('utf-8').split("\n")
