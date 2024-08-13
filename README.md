@@ -191,10 +191,19 @@ If you are seeing output from the `ifconfig` tool then continue on with the foll
 
 Now that the extra packages are installed let's install our script and any remaining supporting python modules.
 
+**--> NEW!! These instructions adjusted to use the latest released version! See ["Why"](#why-are-we-checking-out-the-latest-release) below.**
+
 ```shell
+# Get a copy of the repository
 sudo git clone https://github.com/ironsheep/RPi-Reporter-MQTT2HA-Daemon.git /opt/RPi-Reporter-MQTT2HA-Daemon
 
+# move into your new local repository
 cd /opt/RPi-Reporter-MQTT2HA-Daemon
+
+# (NEW) Move to the latest official release:
+sudo git checkout v1.8.5 # (you want to replace v1.8.5 with the latest if this isn't)
+
+# Make sure any script requirement are installed (if they aren't aready)
 sudo pip3 install -r requirements.txt
 ```
 
@@ -204,6 +213,10 @@ sudo pip3 install -r requirements.txt
 - **isp-rpi-reporter.service** - Systemd Daemon / Service description file
 
 ... need to have any mention of `/opt/RPi-Reporter-MQTT2HA-Daemon` changed to your install location **before you can run this script as a service.**
+
+#### Why are we checking-out the latest release?
+
+When I'm developing new features I'll work on a different branch thereby not affecting master. When they are tested I'll merge the development brach into master. However it is much easier to merge pull requests directly into master. This action will, for a short period of time, make the **master branch have possibly non-working code**!  You don't want this version until I've completed my testing of the new version and marked it as a new release. The clone gets you all versions while the checkout command moves your installation to the released version so you are running the latest fully tested code.  You can always check the [releases page](https://github.com/ironsheep/RPi-Reporter-MQTT2HA-Daemon/releases) to find out which is the latest. This also tells you what changes appeared in each release.
 
 ## Configuration
 
@@ -234,7 +247,7 @@ password = {your mqtt password if your setup requires one}
 
 Now that your config.ini is setup let's test!
 
-**NOTE:** *If you wish to support remote commanding of your RPi then you can find additional configuration steps in [Setting up RPi Control from Home Assistant](./RMTCTRL.md)  However, to simplifly your effort, please complete the following steps to ensure all is running as desired before you attempt to set up remote control.*
+**NOTE:** *If you wish to support remote commanding of your RPi then you can find additional configuration steps in [Setting up RPi Control from Home Assistant](./RMTECTRL.md)  However, to simplifly your effort, please complete the following steps to ensure all is running as desired before you attempt to set up remote control.*
 
 ## Execution
 
@@ -348,6 +361,9 @@ sudo systemctl stop isp-rpi-reporter.service
 # get the latest version
 sudo git pull
 
+# (NEW) Move to the latest official release:
+sudo git checkout v1.8.5 # (you want to replace v1.8.5 with the latest if this isn't)
+
 # reload the systemd configuration (in case it changed)
 sudo systemctl daemon-reload
 
@@ -358,6 +374,8 @@ sudo systemctl start isp-rpi-reporter.service
 systemctl status isp-rpi-reporter.service
 
 ```
+
+**NOTE**: *Wondering about the "checkout" command? See [Why are we checking-out the latest release?](#why-are-we-checking-out-the-latest-release) above.*
 
 #### SysV init script commands to perform update
 
@@ -373,6 +391,9 @@ sudo /etc/init.d/rpi-reporter stop
 # get the latest version
 sudo git pull
 
+# (NEW) Move to the latest official release:
+sudo git checkout v1.8.5 # (you want to replace v1.8.5 with the latest if this isn't)
+
 # restart the service with your new version
 sudo /etc/init.d/rpi-reporter start
 
@@ -380,6 +401,8 @@ sudo /etc/init.d/rpi-reporter start
 sudo /etc/init.d/rpi-reporter status
 
 ```
+
+**NOTE**: *Wondering about the "checkout" command? See [Why are we checking-out the latest release?](#why-are-we-checking-out-the-latest-release) above.*
 
 ## Integration
 
@@ -556,7 +579,7 @@ This project is enjoyed by users in many countries. A number of these users have
 
 Thank you to the following github users for taking the time to help make this project function better for all of us!:
 
-- [brunob45](https://github.com/brunob45) - report swap usage
+- [brunob45](https://github.com/brunob45) - report swap usage, fixes to MQTT topics for HA 2023.8 update
 - [hobbypunk90](https://github.com/hobbypunk90) - add commanding of RPi from HA
 - [OasisOfChaos](https://github.com/OasisOfChaos) - adjust temp. reporting so can work on non-RPi devices like Orange Pi
 - [nabeelmoeen](https://github.com/nabeelmoeen) - add memory usage as addiitonal sensor
@@ -564,6 +587,9 @@ Thank you to the following github users for taking the time to help make this pr
 - [Henry-Sir](https://github.com/Henry-Sir) - add cpu usage as addiitonal sensor
 - [woodmj74](https://github.com/woodmj74) - changes to reporting correct temperature units
 - [dflvunoooooo](https://github.com/dflvunoooooo) - changes to getting last update date
+- [hostcc](https://github.com/hostcc) - improved error handling with external commands
+- [frennkie](https://github.com/frennkie) - add compatibility with paho-mqtt 2.0.0
+- [kroecks](https://github.com/kroecks) - changes to sensor_name setup
 
 ## Credits
 
